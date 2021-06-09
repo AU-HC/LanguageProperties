@@ -37,8 +37,10 @@ object Main {
 
 
   def main(args: Array[String]): Unit = {
-    println(closure(BinOp(Regular, Intersection, BinOp(CFL, Intersection, CFL))))
-    println(closure(BinOp(CFL, Intersection, BinOp(Regular, Intersection, CFL))))
+
+
+    println(closure(BinOp(Regular, Intersection, UnOp(CFL, Complement))))
+    println(closure(BinOp(CFL, Intersection, UnOp(Regular, Complement))))
     // println(closure(UnOp(UnOp(Finite, Star), Star)))
     // println(closure(BinOp(CFL, Union, BinOp(Regular, Union, CFL))))
     // println(closure(BinOp(Finite, Union, BinOp(Regular, Union, Finite))))
@@ -102,6 +104,9 @@ object Main {
           case (_, Finite) => Finite
           // regular
           case (Regular, Regular) => Regular
+          // cfl
+          case (CFL, Regular | CFL) => CFL
+          case (CFL | Regular, CFL) => CFL
           // recursive
           case (Recursive, Regular | CFL | DCFL | Recursive) => Recursive
           case (Recursive | Regular | CFL | DCFL, Recursive) => Recursive
