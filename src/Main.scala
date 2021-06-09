@@ -37,18 +37,18 @@ object Main {
 
 
   def main(args: Array[String]): Unit = {
-
-
-    // println(closure(BinOp(Regular, Intersection, UnOp(CFL, Complement))))
-    // println(closure(BinOp(CFL, Intersection, UnOp(Regular, Complement))))
-    println(closure(BinOp(CFL, Union, BinOp(Finite, Intersection, CFL))))
-    println(closure(BinOp(CFL, Intersection, BinOp(Finite, Union, CFL))))
-    println(closure(BinOp(Finite, Intersection, BinOp(CFL, Union, CFL))))
-    println(closure(BinOp(CFL, Union, BinOp(Finite, Union, CFL))))
+    testClosure(BinOp(CFL, Union, BinOp(Finite, Intersection, CFL)))
+    testClosure(closure(BinOp(CFL, Intersection, BinOp(Finite, Union, CFL))))
+    testClosure(closure(BinOp(Finite, Intersection, BinOp(CFL, Union, CFL))))
+    testClosure(closure(BinOp(CFL, Union, BinOp(Finite, Union, CFL))))
     // println(closure(UnOp(UnOp(Finite, Star), Star)))
     // println(closure(BinOp(CFL, Union, BinOp(Regular, Union, CFL))))
     // println(closure(BinOp(Finite, Union, BinOp(Regular, Union, Finite))))
     // println(closure(BinOp(DCFL, Intersection, BinOp(RE, Intersection, CFL))))
+  }
+
+  def testClosure(prg: Language): Unit = {
+    println(closure(prg))
   }
 
   def closure(x: Language): Language = x match {
