@@ -35,16 +35,25 @@ object Main {
   case object Star extends UnOperation
   case object Complement extends UnOperation
 
-
   def main(args: Array[String]): Unit = {
-    testClosure(BinOp(CFL, Union, BinOp(Finite, Intersection, CFL)))
-    testClosure(closure(BinOp(CFL, Intersection, BinOp(Finite, Union, CFL))))
-    testClosure(closure(BinOp(Finite, Intersection, BinOp(CFL, Union, CFL))))
-    testClosure(closure(BinOp(CFL, Union, BinOp(Finite, Union, CFL))))
-    // println(closure(UnOp(UnOp(Finite, Star), Star)))
-    // println(closure(BinOp(CFL, Union, BinOp(Regular, Union, CFL))))
-    // println(closure(BinOp(Finite, Union, BinOp(Regular, Union, Finite))))
-    // println(closure(BinOp(DCFL, Intersection, BinOp(RE, Intersection, CFL))))
+
+
+    three(Finite, Intersection, CFL, Intersection, CFL)
+    three(Regular, Intersection, CFL, Intersection, CFL)
+    two(Finite, Intersection, Regular)
+    two(Regular, Intersection, CFL)
+    // three(Regular, Union, CFL, Union, CFL)
+    // two(Regular, Intersection, UnOp(CFL, Complement))
+    // two(CFL, Intersection, UnOp(Regular, Complement))
+    // three(CFL, Union, CFL, Intersection, Regular)
+  }
+
+  def two(firstL: Language, firstOp: BinOperation, secondL: Language): Unit = {
+    testClosure(BinOp(firstL, firstOp, secondL))
+  }
+
+  def three(firstL: Language, firstOp: BinOperation, secondL: Language, secondOp: BinOperation, thirdL: Language): Unit = {
+    testClosure(BinOp(thirdL, secondOp, BinOp(firstL, firstOp, secondL)))
   }
 
   def testClosure(prg: Language): Unit = {
@@ -135,7 +144,6 @@ object Main {
           case (RE, Regular | Finite | CFL | DCFL | Recursive | RE) => RE
           case (RE | Regular | Finite | CFL | DCFL | Recursive, RE) => RE
           case (_, _) => Unknown
-          case _ => throw  new Exception
         }
       }
   }
