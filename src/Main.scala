@@ -37,9 +37,12 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    two(Regular, Intersection, RE)
-    three(Finite, Intersection, CFL, Intersection, UnOp(Finite, Complement))
-    four(Regular, Intersection, Regular, Intersection, CFL, Intersection, Regular)
+    two(CFL, Intersection, UnOp(Regular, Complement))
+
+
+    // two(Regular, Intersection, RE)
+    // three(Finite, Intersection, CFL, Intersection, UnOp(Finite, Complement))
+    // four(Regular, Intersection, Regular, Intersection, CFL, Intersection, Regular)
   }
 
   def two(firstL: Language, firstOp: BinOperation, secondL: Language): Unit = {
