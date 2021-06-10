@@ -37,15 +37,9 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-
-    three(Finite, Intersection, CFL, Intersection, CFL)
-    three(Regular, Intersection, CFL, Intersection, CFL)
-    two(Finite, Intersection, Regular)
-    two(Regular, Intersection, CFL)
-    // three(Regular, Union, CFL, Union, CFL)
-    // two(Regular, Intersection, UnOp(CFL, Complement))
-    // two(CFL, Intersection, UnOp(Regular, Complement))
-    // three(CFL, Union, CFL, Intersection, Regular)
+    two(Regular, Intersection, RE)
+    three(Finite, Intersection, CFL, Intersection, UnOp(Finite, Complement))
+    four(Regular, Intersection, Regular, Intersection, CFL, Intersection, Regular)
   }
 
   def two(firstL: Language, firstOp: BinOperation, secondL: Language): Unit = {
@@ -54,6 +48,10 @@ object Main {
 
   def three(firstL: Language, firstOp: BinOperation, secondL: Language, secondOp: BinOperation, thirdL: Language): Unit = {
     testClosure(BinOp(thirdL, secondOp, BinOp(firstL, firstOp, secondL)))
+  }
+
+  def four(firstL: Language, firstOp: BinOperation, secondL: Language, secondOp: BinOperation, thirdL: Language, thirdOp: BinOperation, fourthL: Language): Unit = {
+    testClosure(BinOp(fourthL, thirdOp, BinOp(thirdL, secondOp, BinOp(firstL, firstOp, secondL))))
   }
 
   def testClosure(prg: Language): Unit = {
@@ -145,6 +143,8 @@ object Main {
           case (RE | Regular | Finite | CFL | DCFL | Recursive, RE) => RE
           case (_, _) => Unknown
         }
+        case _ => throw new Exception
       }
+    case _ => throw new Exception
   }
 }
